@@ -115,6 +115,10 @@ def limpiar(df):
         if tipo == "string":
             df = df.withColumn(nombre, F.trim(F.col(nombre)))
 
+    # 1b. Unificar mayúsculas en las columnas categóricas (ej. 'f' y 'F', 'leve' y 'Leve')
+    for c in [COL_CATEGORIA] + COLS_EXTRA:
+        df = df.withColumn(c, F.upper(F.col(c)))
+
     # 2. Eliminar filas duplicadas
     df = df.dropDuplicates()
 
